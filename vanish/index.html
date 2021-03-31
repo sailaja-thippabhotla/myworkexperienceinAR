@@ -1,0 +1,413 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Vanish</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+
+
+
+
+
+<!-- Send deviceorientation/devicemotion to the INNER iframe -->
+<script src="//cdn.8thwall.com/web/iframe/iframe.js"></script>
+
+
+</html>
+<body>
+<style type="text/css">
+  /* iframe styling */
+
+#my-iframe {
+  width: 100vw;
+  height: 90vh;
+  top: 0vh;
+  margin: 0 auto;
+  border: 0;
+    transform: translateY(0%);
+ 
+
+}
+
+#startBtn {
+  position: absolute;
+  z-index: 1; 
+  left: 0%;
+  top: 20vh;
+  border: 0;
+  width: 4%;
+  background-color: transparent; 
+}
+
+#startBtn img {
+  margin: -0px -0vw;
+}
+
+#startBtn:focus {
+  outline: none !important; 
+  box-shadow: none !important;
+}
+
+#iframeControls {
+  display: none;
+  position: absolute;
+  height: auto;
+  width: 98vw;
+  left: 50%;
+  z-index: 1;
+  transform: translateX(-50%);
+}
+
+#stopBtn {
+  margin-top: 1em;
+  margin-left: 1em;
+  float: left;
+  border: 0;
+  background: none;
+  padding: 0;
+}
+
+#stopBtn:focus {
+  outline: none !important; 
+  box-shadow: none !important;
+}
+
+#stopImg {
+  width: 6em;
+  height: 6em;
+  background-image: url(https://vanishaddressable.s3.ap-south-1.amazonaws.com/icons/close-icon.svg);
+  filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.5));
+  background-size: cover;
+}
+
+#expandBtn {
+  margin-top: 1em;
+  margin-right: 1em;
+  float: right;
+  border: 0;
+  background: none;
+  padding: 0;
+}
+
+#expandBtn:focus {
+  outline: none !important; 
+  box-shadow: none !important;
+}
+
+#expandImg {
+  width: 6em;
+  height: 6em;
+  background-image: url(https://vanishaddressable.s3.ap-south-1.amazonaws.com/icons/expand-icon.svg);
+  filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.5));
+  background-size: cover;
+}
+
+#poweredByLogo {
+  width: 30%;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: 1;
+  padding: 1em;
+}
+
+.fullscreen-iframeControls {
+  position: fixed !important;
+  width: 100% !important;
+  top: 0;
+}
+
+.fullscreen-iframe {
+  position: fixed !important;
+  width: 100% !important;
+  top: 0;
+  right: 0;
+}
+
+.fullscreen-btn {
+  position: fixed !important;
+  margin: 0;
+  top: 1em;
+  right: 0;
+}
+
+.fullscreen-btn #expandImg {
+  background-image: url(https://vanishaddressable.s3.ap-south-1.amazonaws.com/icons/shrink-icon.svg) !important;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* Animations */
+
+.fade-in { animation: fade-in 0.25s linear forwards; }
+@keyframes fade-in {
+  0% {opacity: 0;}
+  100% {opacity: 1;}
+}
+
+.fade-out { animation: fade-out 0.25s linear forwards; }
+@keyframes fade-out {
+  0% {opacity: 1;}
+  100% {opacity: 0;}
+}
+
+/* Article styling */
+
+body {
+  font-family: 'Noto Serif', serif;
+  margin: 0 auto;
+  border: 0;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  margin: 0 auto;
+  width: 100vw;
+}
+
+.grid-item {
+  text-align: center;
+}
+
+.author {
+  margin: 0px;
+}
+
+#date {
+  margin-top: 0.25em;
+  margin-bottom: 0.25em;
+  font-weight: bold;
+  font-style: italic;
+}
+
+header h1 {
+  font-size: 3em;
+}
+
+header img {
+  max-width: 3em;
+  padding-top: 2.5em;
+}
+
+.content {
+  padding: 0px 3em;
+}
+
+.content h1 {
+  font-size: 6em;
+  font-style: italic;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+p {
+  font-size: 3em;
+  line-height: 1.5em;
+}
+
+#inline-ar {
+  position: relative;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+@media screen and (min-width: 981px) {
+  #inline-ar {
+    display: block;
+    margin: 0 auto;
+  }
+  
+  .grid-container {
+    width: 85vw;
+  }
+  
+
+  
+  p {
+    font-size: 1em;
+    line-height: 1.5em;
+  }
+  
+  .content {
+    padding: 0px 10em;
+  }
+  
+  .content h1 {
+    font-size: 4em;
+  }
+  
+  #expandBtn {
+    display: none !important;
+  }
+  
+  #stopBtn {
+    display: none !important;
+  }
+}
+
+/* Prompt Box Styling */
+.prompt-button-container-8w-iframe{
+  width: 100vw;
+  font-size: 5px;
+  left: 10vw;
+}
+
+.prompt-box-8w-iframe {
+  width: 100vw !important;
+  border-radius: 1em !important;
+  padding: 1em !important;
+  font-size: 10px;
+}
+
+.prompt-box-8w-iframe p {
+  font-size: 2.25em !important;
+}
+
+.prompt-button-8w-iframe {
+  font-size: 2.3em !important;
+  border-radius: 0.5em !important;
+}
+</style>
+<script type="text/javascript">
+  // The AR content to load in the iframe.
+const INNER_FRAME_URL = 'https://avataar.8thwall.app/vanish'
+
+// User control elements for the iframe AR experience.
+const IFRAME_ID = 'my-iframe'         // Iframe containing AR content.
+const CONTROLS_ID = 'iframeControls'  // Top bar including Stop Button and Expand Button.
+// const START_BTN_ID = 'startBtn'       // Button to start AR.
+const STOP_BTN_ID = 'stopBtn'         // Button to stop AR.
+const EXPAND_BTN_ID = 'expandBtn'     // Button to expand AR iframe to fill screen.
+
+
+const onLoad = () => {
+  window.XRIFrame.registerXRIFrame(IFRAME_ID)
+  startAR()
+
+}
+// Add event listenters and callbacks for the body DOM.
+
+
+// Other UI elements
+const DATE_ID = 'date'  // Displays today's date in the article.
+
+// CSS classes for toggling appearance of elements when the iframe is full screen.
+const FULLSCREEN_IFRAME_CLASS = 'fullscreen-iframe'
+const FULLSCREEN_CONTROLS_CLASS = 'fullscreen-iframeControls'
+const FULLSCREEN_EXPAND_BTN_CLASS = 'fullscreen-btn'
+const FULLSCREEN_STOP_BTN_CLASS = 'hidden'
+
+// Handles stop AR button behavior; also called when scrolled away from active AR iframe.
+const stopAR = () => {
+  //deregisters the XRIFrame
+  window.XRIFrame.deregisterXRIFrame()
+  
+  const controls = document.getElementById(CONTROLS_ID)
+  controls.style.opacity = 1
+  controls.classList.remove('fade-in')
+  controls.classList.add('fade-out')
+  
+  // const startBtn = document.getElementById(START_BTN_ID)
+  // startBtn.style.opacity = 0
+  // startBtn.style.display = 'block'
+  // startBtn.classList.remove('fade-out')
+  // startBtn.classList.add('fade-in')
+  
+  
+  
+  //removes AR iframe's source to end AR session
+  document.getElementById(IFRAME_ID).setAttribute('src', '')
+  
+  const styleCleanup = setTimeout(() => { 
+    // startBtn.style.opacity = 1
+    // startBtn.classList.remove('fade-in')
+    
+    poweredByLogo.style.opacity = 1
+    poweredByLogo.classList.remove('fade-in')
+    
+    controls.style.display = 'none'
+    controls.style.opacity = 0
+    controls.classList.remove('fade-out')
+  }, 300)
+  
+  setTimeout(() => {clearTimeout(styleCleanup)}, 900)
+}
+
+// Create an interaction observer that stops AR when the user scrolls away from active AR session.
+const createObserver = () => {
+  let cameraActive
+  
+  const handleIntersect = (entries, observer) => {
+    entries.forEach((entry) => {
+      if(cameraActive && !entry.isIntersecting) {
+        stopAR()
+        cameraActive = false
+      }
+    })
+  }
+  
+  window.addEventListener('message', (event) => {
+    if (event.data === 'acceptedCamera') {
+      cameraActive = true
+    }
+  })
+
+  // How much of the iframe is still visible when scrolling away before stopping AR.
+  const options = { threshold: 0.2 }
+  
+  new IntersectionObserver(handleIntersect, options).observe(document.getElementById(IFRAME_ID))
+}
+
+
+
+// Handles fullscreen button behavior
+const toggleFullscreen = () => {
+  document.getElementById(IFRAME_ID).classList.toggle(FULLSCREEN_IFRAME_CLASS)
+  document.getElementById(CONTROLS_ID).classList.toggle(FULLSCREEN_CONTROLS_CLASS)
+  document.getElementById(EXPAND_BTN_ID).classList.toggle(FULLSCREEN_EXPAND_BTN_CLASS)
+  document.getElementById(STOP_BTN_ID).classList.toggle(FULLSCREEN_STOP_BTN_CLASS)
+}
+
+// Handles start AR button behavior.
+const startAR = () => {
+  //registers the XRIFrame by iframe ID
+  //window.XRIFrame.registerXRIFrame(IFRAME_ID)
+  
+  const iframe = document.getElementById(IFRAME_ID)
+  
+  // const startBtn = document.getElementById(START_BTN_ID)
+  // startBtn.classList.add('fade-out')
+  
+
+  
+  iframe.setAttribute('src', INNER_FRAME_URL)  // This is where the AR iframe's source is set.
+}
+
+// Set up.
+
+
+// Add event listenters and callbacks for the body DOM.
+window.addEventListener('load', onLoad, false)
+window.startAR = startAR
+</script>
+
+<div id="inline-ar">
+  <!-- <button id="startBtn" onClick="startAR()">
+    <img style="left: -30%"src="https://webardata.s3.ap-south-1.amazonaws.com/prime/start.png">
+  </button> -->
+  
+  <iframe
+    id="my-iframe"
+    allow="camera;microphone;gyroscope;accelerometer;">
+  </iframe>
+</div>
+</body>
+
+</html>
